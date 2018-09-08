@@ -3,10 +3,8 @@ package net.yuiseki.essential;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +26,8 @@ class EssentialDialog extends EssentialView {
 
     EssentialDialog(final EssentialService essentialService) {
         super(essentialService);
-        essentialLayoutParams.flags = 0;
+        // Necessary for keyboard input
+        essentialWindowLayoutParams.flags = 0;
 
         LayoutInflater inflater = LayoutInflater.from(essentialService);
         essentialView = inflater.inflate(R.layout.dialog_essential, null);

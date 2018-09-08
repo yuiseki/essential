@@ -1,11 +1,9 @@
 package net.yuiseki.essential;
 
-import android.content.Intent;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 class EssentialButton extends EssentialView {
@@ -36,16 +34,16 @@ class EssentialButton extends EssentialView {
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()){
                 case MotionEvent.ACTION_DOWN:
-                    initialPosition = new EssentialPosition(essentialLayoutParams).minus(new EssentialPosition(event));
+                    initialPosition = new EssentialPosition(essentialWindowLayoutParams).minus(new EssentialPosition(event));
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (initialPosition ==null) {
                         break;
                     }
                     EssentialPosition newPosition = initialPosition.plus(new EssentialPosition(event));
-                    essentialLayoutParams.x = newPosition.getX();
-                    essentialLayoutParams.y = newPosition.getY();
-                    windowManager.updateViewLayout(essentialView, essentialLayoutParams);
+                    essentialWindowLayoutParams.x = newPosition.getX();
+                    essentialWindowLayoutParams.y = newPosition.getY();
+                    windowManager.updateViewLayout(essentialView, essentialWindowLayoutParams);
                     break;
                 case MotionEvent.ACTION_UP:
                     initialPosition = null;;
@@ -61,7 +59,7 @@ class EssentialButton extends EssentialView {
         public void onClick(View v) {
             Log.d(TAG, "onClick");
             if (doubleClick){
-                essentialService.showEssentialDialog();
+                essentialService.showEssentialYouTubeView();
             }else {
                 doubleClick = true;
             }

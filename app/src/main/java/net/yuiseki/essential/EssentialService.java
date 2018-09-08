@@ -29,7 +29,9 @@ public class EssentialService extends android.app.Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        hideEssentialButton();
+        essentialButton = null;
+        essentialDialog = null;
+        essentialYouTubeView = null;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class EssentialService extends android.app.Service {
         startForeground(new Random().nextInt(), essentialNotification);
     }
 
-    private EssentialButton essentialButton = null;
+    public EssentialButton essentialButton = null;
     public void showEssentialButton(){
         if (essentialButton==null) {
             essentialButton = new EssentialButton(this);
@@ -73,11 +75,10 @@ public class EssentialService extends android.app.Service {
         if (essentialButton != null) {
             essentialButton.setVisibility(false);
         }
-        essentialButton = null;
     }
 
     private EssentialDialog essentialDialog = null;
-    public void showEssentialDialog() {
+    public void showEssentialDialog(){
         hideEssentialButton();
         if (essentialDialog==null){
             essentialDialog = new EssentialDialog(this);
@@ -90,6 +91,21 @@ public class EssentialService extends android.app.Service {
         if (essentialDialog!=null){
             essentialDialog.setVisibility(false);
         }
-        essentialDialog = null;
+    }
+
+    private EssentialYouTubeView essentialYouTubeView = null;
+    public void showEssentialYouTubeView(){
+        hideEssentialButton();
+        if (essentialYouTubeView ==null){
+            essentialYouTubeView = new EssentialYouTubeView(this);
+        }
+        essentialYouTubeView.setVisibility(true);
+    }
+
+    public void hideEssentialYouTubeView(){
+        showEssentialButton();
+        if (essentialYouTubeView!=null){
+            essentialYouTubeView.setVisibility(false);
+        }
     }
 }

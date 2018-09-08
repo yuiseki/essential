@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 public class EssentialView {
     WindowManager windowManager;
-    WindowManager.LayoutParams essentialLayoutParams;
+    WindowManager.LayoutParams essentialWindowLayoutParams;
 
     View essentialView;
 
@@ -19,15 +19,15 @@ public class EssentialView {
     EssentialView(final EssentialService essentialService){
         this.essentialService = essentialService;
         windowManager = (WindowManager) essentialService.getSystemService(Service.WINDOW_SERVICE);
-        essentialLayoutParams = new WindowManager.LayoutParams(
+        essentialWindowLayoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-        essentialLayoutParams.gravity = Gravity.CENTER;
-        essentialLayoutParams.x = 0;
-        essentialLayoutParams.y = 0;
+        essentialWindowLayoutParams.gravity = Gravity.CENTER;
+        essentialWindowLayoutParams.x = 0;
+        essentialWindowLayoutParams.y = 0;
     }
 
     private Boolean isVisible = false;
@@ -35,7 +35,7 @@ public class EssentialView {
         if (this.isVisible != b) {
             this.isVisible = b;
             if (b) {
-                windowManager.addView(essentialView, essentialLayoutParams);
+                windowManager.addView(essentialView, essentialWindowLayoutParams);
             } else {
                 windowManager.removeView(essentialView);
             }
