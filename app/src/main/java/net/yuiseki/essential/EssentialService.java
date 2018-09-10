@@ -10,10 +10,15 @@ import android.graphics.Color;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import net.yuiseki.essential.view.EssentialButton;
+import net.yuiseki.essential.view.EssentialDialog;
+import net.yuiseki.essential.view.EssentialYouTubeView;
+
 import java.util.Random;
 
 public class EssentialService extends android.app.Service {
     private String TAG = "EssentialService";
+
 
     @Nullable
     @Override
@@ -68,12 +73,18 @@ public class EssentialService extends android.app.Service {
         if (essentialButton==null) {
             essentialButton = new EssentialButton(this);
         }
+        essentialButton.essentialWindowLayoutParams.x = buttonX;
+        essentialButton.essentialWindowLayoutParams.y = buttonY;
         essentialButton.setVisibility(true);
     }
 
+    int buttonX = 0;
+    int buttonY = 0;
     public void hideEssentialButton(){
         if (essentialButton != null) {
             essentialButton.setVisibility(false);
+            buttonX = essentialButton.essentialWindowLayoutParams.x;
+            buttonY = essentialButton.essentialWindowLayoutParams.y;
         }
     }
 
@@ -96,7 +107,7 @@ public class EssentialService extends android.app.Service {
     private EssentialYouTubeView essentialYouTubeView = null;
     public void showEssentialYouTubeView(){
         hideEssentialButton();
-        if (essentialYouTubeView ==null){
+        if (essentialYouTubeView == null){
             essentialYouTubeView = new EssentialYouTubeView(this);
         }
         essentialYouTubeView.setVisibility(true);
@@ -107,5 +118,6 @@ public class EssentialService extends android.app.Service {
         if (essentialYouTubeView!=null){
             essentialYouTubeView.setVisibility(false);
         }
+        essentialYouTubeView = null;
     }
 }

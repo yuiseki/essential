@@ -1,4 +1,4 @@
-package net.yuiseki.essential;
+package net.yuiseki.essential.view;
 
 import android.util.Log;
 import android.util.TypedValue;
@@ -6,11 +6,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-class EssentialButton extends EssentialView {
+import net.yuiseki.essential.EssentialService;
+import net.yuiseki.essential.R;
+
+
+public class EssentialButton extends EssentialView {
     private String TAG = "EssentialButton";
 
-
-    EssentialButton(EssentialService essentialService){
+    public EssentialButton(EssentialService essentialService){
         super(essentialService);
 
         ImageView imageView = new ImageView(essentialService);
@@ -27,6 +30,7 @@ class EssentialButton extends EssentialView {
 
         essentialView.setOnTouchListener(onTouchListener);
         essentialView.setOnClickListener(onClickListener);
+
     }
 
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
@@ -49,6 +53,7 @@ class EssentialButton extends EssentialView {
                     initialPosition = null;;
                     break;
             }
+            // Important return false for clickable
             return false;
         }
     };

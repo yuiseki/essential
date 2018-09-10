@@ -32,5 +32,6 @@ dependencies {
         exclude group: 'com.android.support'
         exclude module: 'support-v4'
     }
+    implementation 'com.github.imangazalievm:circlemenu:2.0.2'
 
 }

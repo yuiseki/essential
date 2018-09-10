@@ -1,4 +1,4 @@
-package net.yuiseki.essential;
+package net.yuiseki.essential.view;
 
 import android.support.annotation.NonNull;
 import android.view.MotionEvent;
@@ -13,9 +13,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerInitListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerListener;
 
+import net.yuiseki.essential.EssentialService;
+
 public class EssentialYouTubeView extends EssentialView {
 
-    EssentialYouTubeView(final EssentialService essentialService) {
+    public EssentialYouTubeView(final EssentialService essentialService) {
         super(essentialService);
         int size = essentialService.essentialButton.essentialView.getMeasuredHeight();
         EssentialRelativeLayout essentialRelativeLayout = new EssentialRelativeLayout(essentialService);

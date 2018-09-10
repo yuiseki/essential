@@ -1,4 +1,4 @@
-package net.yuiseki.essential;
+package net.yuiseki.essential.view;
 
 import android.view.MotionEvent;
 import android.view.WindowManager;

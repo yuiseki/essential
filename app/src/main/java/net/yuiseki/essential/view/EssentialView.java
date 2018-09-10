@@ -1,4 +1,4 @@
-package net.yuiseki.essential;
+package net.yuiseki.essential.view;
 
 import android.app.Service;
 import android.graphics.PixelFormat;
@@ -6,9 +6,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import net.yuiseki.essential.EssentialService;
+
 public class EssentialView {
-    WindowManager windowManager;
-    WindowManager.LayoutParams essentialWindowLayoutParams;
+    public WindowManager windowManager;
+    public WindowManager.LayoutParams essentialWindowLayoutParams;
 
     View essentialView;
 

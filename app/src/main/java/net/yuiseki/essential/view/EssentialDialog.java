@@ -1,4 +1,4 @@
-package net.yuiseki.essential;
+package net.yuiseki.essential.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,12 +19,15 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.services.StatusesService;
 
+import net.yuiseki.essential.EssentialService;
+import net.yuiseki.essential.R;
+
 import retrofit2.Call;
 
-class EssentialDialog extends EssentialView {
+public class EssentialDialog extends EssentialView {
     String TAG = "EssentialDialog";
 
-    EssentialDialog(final EssentialService essentialService) {
+    public EssentialDialog(final EssentialService essentialService) {
         super(essentialService);
         // Necessary for keyboard input
         essentialWindowLayoutParams.flags = 0;

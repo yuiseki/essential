@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.yuiseki.essential.view.EssentialRelativeLayout android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.imangazaliev.circlemenu.CircleMenu android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_centerInParent="true"
+        android:id="@+id/circleMenu"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <com.imangazaliev.circlemenu.CircleMenuButton
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorNormal="#2196F3"
+            app:colorPressed="#1E88E5"
+            app:icon="@drawable/ic_launcher_foreground"/>
+
+        <com.imangazaliev.circlemenu.CircleMenuButton
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorNormal="#4CAF50"
+            app:colorPressed="#43A047"
+            app:icon="@drawable/ic_launcher_foreground"/>
+
+        <com.imangazaliev.circlemenu.CircleMenuButton
+            android:id="@+id/alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorNormal="#F44336"
+            app:colorPressed="#E53935"
+            app:icon="@drawable/ic_launcher_foreground"/>
+
+    </com.imangazaliev.circlemenu.CircleMenu>
+</net.yuiseki.essential.view.EssentialRelativeLayout>

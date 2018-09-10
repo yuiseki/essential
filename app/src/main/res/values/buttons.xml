@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="icons">
+        <item>@drawable/ic_launcher_foreground</item>
+        <item>@drawable/ic_launcher_foreground</item>
+    </integer-array>
+    <integer-array name="colors">
+        <item>@android:color/black</item>
+        <item>@android:color/black</item>
+    </integer-array>
+
+</resources>
