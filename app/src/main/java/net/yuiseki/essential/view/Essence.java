@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import net.yuiseki.essential.EssentialService;
 
-public class EssentialView {
+public class Essence {
     public WindowManager windowManager;
     public WindowManager.LayoutParams essentialWindowLayoutParams;
 
@@ -18,7 +18,7 @@ public class EssentialView {
     EssentialService essentialService;
 
 
-    EssentialView(final EssentialService essentialService){
+    public Essence(final EssentialService essentialService){
         this.essentialService = essentialService;
         windowManager = (WindowManager) essentialService.getSystemService(Service.WINDOW_SERVICE);
         essentialWindowLayoutParams = new WindowManager.LayoutParams(

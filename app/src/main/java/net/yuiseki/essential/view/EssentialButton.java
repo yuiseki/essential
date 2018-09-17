@@ -1,16 +1,24 @@
 package net.yuiseki.essential.view;
 
+import android.app.usage.UsageEvents;
+import android.app.usage.UsageStatsManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import net.yuiseki.essential.EssentialApplication;
 import net.yuiseki.essential.EssentialService;
 import net.yuiseki.essential.R;
 
 
-public class EssentialButton extends EssentialView {
+public class EssentialButton extends Essence {
     private String TAG = "EssentialButton";
 
     public EssentialButton(EssentialService essentialService){
@@ -64,7 +72,37 @@ public class EssentialButton extends EssentialView {
         public void onClick(View v) {
             Log.d(TAG, "onClick");
             if (doubleClick){
-                essentialService.showEssentialYouTubeView();
+                Log.d(TAG, "doubleClick");
+                //essentialService.essentialEverything.showEssentialYouTubeView();
+                long time = System.currentTimeMillis();
+                long interval = 10 * 1000;
+                EssentialApplication essentialApplication = (EssentialApplication) essentialService.getApplication();
+                essentialApplication.inspectYouTubeVideoData = true;
+                try {
+                    UsageStatsManager usageStatsManager = (UsageStatsManager) essentialService.getSystemService(Context.USAGE_STATS_SERVICE);
+                    UsageEvents events = usageStatsManager.queryEvents(time - interval, time);
+                    while (events.hasNextEvent()){
+                        UsageEvents.Event event = new UsageEvents.Event();
+                        if (events.getNextEvent(event)) {
+                            if (event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+                                Log.d(TAG, "event.getPackageName: "+event.getPackageName());
+                                Log.d(TAG, "event.getClassName: "+event.getClassName());
+                                if (event.getPackageName().equals("com.google.android.youtube")
+                                        && event.getClassName().equals("com.google.android.apps.youtube.app.WatchWhileActivity")){
+                                    ActivityInfo activityInfo = essentialService.getPackageManager().getActivityInfo(
+                                            new ComponentName(event.getPackageName(), event.getClassName()),
+                                            PackageManager.GET_META_DATA);
+                                    String activityTitle = activityInfo.loadLabel(essentialService.getPackageManager()).toString();
+                                    Log.d(TAG, "activityTitle: "+activityTitle);
+
+                                }
+
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }else {
                 doubleClick = true;
             }

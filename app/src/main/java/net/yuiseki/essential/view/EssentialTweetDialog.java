@@ -24,10 +24,10 @@ import net.yuiseki.essential.R;
 
 import retrofit2.Call;
 
-public class EssentialDialog extends EssentialView {
-    String TAG = "EssentialDialog";
+public class EssentialTweetDialog extends Essence {
+    String TAG = "EssentialTweetDialog";
 
-    public EssentialDialog(final EssentialService essentialService) {
+    public EssentialTweetDialog(final EssentialService essentialService) {
         super(essentialService);
         // Necessary for keyboard input
         essentialWindowLayoutParams.flags = 0;
@@ -62,13 +62,13 @@ public class EssentialDialog extends EssentialView {
                 call.enqueue(new Callback<Tweet>() {
                     @Override
                     public void success(Result<Tweet> result) {
-                        essentialService.hideEssentialDialog();
+                        essentialService.essentialEverything.hideEssentialTweetDialog();
                     }
 
                     @Override
                     public void failure(TwitterException exception) {
                         exception.printStackTrace();
-                        essentialService.hideEssentialDialog();
+                        essentialService.essentialEverything.hideEssentialTweetDialog();
                     }
                 });
             }
@@ -78,7 +78,7 @@ public class EssentialDialog extends EssentialView {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                essentialService.hideEssentialDialog();
+                essentialService.essentialEverything.hideEssentialTweetDialog();
             }
         });
 

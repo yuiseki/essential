@@ -15,11 +15,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubeP
 
 import net.yuiseki.essential.EssentialService;
 
-public class EssentialYouTubeView extends EssentialView {
+public class EssentialYouTubeView extends Essence {
 
     public EssentialYouTubeView(final EssentialService essentialService) {
         super(essentialService);
-        int size = essentialService.essentialButton.essentialView.getMeasuredHeight();
+        int size = essentialService.essentialEverything.essentialButton.essentialView.getMeasuredHeight();
         EssentialRelativeLayout essentialRelativeLayout = new EssentialRelativeLayout(essentialService);
         essentialWindowLayoutParams = new WindowManager.LayoutParams(
                 size,
@@ -49,7 +49,7 @@ public class EssentialYouTubeView extends EssentialView {
                     public void onStateChange(@NonNull PlayerConstants.PlayerState state) {
                         switch (state){
                             case ENDED:
-                                essentialService.hideEssentialYouTubeView();
+                                essentialService.essentialEverything.hideEssentialYouTubeView();
                                 break;
                         }
                     }

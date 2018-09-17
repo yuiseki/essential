@@ -5,19 +5,25 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import net.yuiseki.essential.view.EssentialButton;
-import net.yuiseki.essential.view.EssentialDialog;
+import net.yuiseki.essential.view.EssentialTweetDialog;
 import net.yuiseki.essential.view.EssentialYouTubeView;
 
 import java.util.Random;
 
 public class EssentialService extends android.app.Service {
     private String TAG = "EssentialService";
+    public EssentialEverything essentialEverything;
 
 
     @Nullable
@@ -29,21 +35,23 @@ public class EssentialService extends android.app.Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        essentialEverything = new EssentialEverything(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        essentialButton = null;
-        essentialDialog = null;
-        essentialYouTubeView = null;
+        essentialEverything.onDestroy();
+        AudioManager audioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.abandonAudioFocusRequest(audioFocusRequest);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null || intent.getAction().equals("start")) {
             startNotification();
-            showEssentialButton();
+            essentialEverything.showEssentialButton();
+            requestAudioFocus();
         } else {
             stopSelf();
         }
@@ -68,56 +76,34 @@ public class EssentialService extends android.app.Service {
         startForeground(new Random().nextInt(), essentialNotification);
     }
 
-    public EssentialButton essentialButton = null;
-    public void showEssentialButton(){
-        if (essentialButton==null) {
-            essentialButton = new EssentialButton(this);
-        }
-        essentialButton.essentialWindowLayoutParams.x = buttonX;
-        essentialButton.essentialWindowLayoutParams.y = buttonY;
-        essentialButton.setVisibility(true);
-    }
+    private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            Log.d(TAG, "onAudioFocusChange: "+focusChange);
+            AudioManager audioManager = (AudioManager)EssentialService.this.getSystemService(Context.AUDIO_SERVICE);
+            if(audioManager.isMusicActive()){
+                Log.d(TAG, "isMusicActive");
+            }
 
-    int buttonX = 0;
-    int buttonY = 0;
-    public void hideEssentialButton(){
-        if (essentialButton != null) {
-            essentialButton.setVisibility(false);
-            buttonX = essentialButton.essentialWindowLayoutParams.x;
-            buttonY = essentialButton.essentialWindowLayoutParams.y;
         }
-    }
-
-    private EssentialDialog essentialDialog = null;
-    public void showEssentialDialog(){
-        hideEssentialButton();
-        if (essentialDialog==null){
-            essentialDialog = new EssentialDialog(this);
-        }
-        essentialDialog.setVisibility(true);
-    }
-
-    public void hideEssentialDialog(){
-        showEssentialButton();
-        if (essentialDialog!=null){
-            essentialDialog.setVisibility(false);
+    };
+    private AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+            .setOnAudioFocusChangeListener(audioFocusChangeListener)
+            .build();
+    private void requestAudioFocus(){
+        AudioManager audioManager = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
+        int result = audioManager.requestAudioFocus(audioFocusRequest);
+        switch (result){
+            case AudioManager.AUDIOFOCUS_REQUEST_GRANTED:
+                Log.d(TAG, "AUDIOFOCUS_REQUEST_GRANTED");
+                break;
+            case AudioManager.AUDIOFOCUS_REQUEST_DELAYED:
+                Log.d(TAG, "AUDIOFOCUS_REQUEST_DELAYED");
+                break;
+            case AudioManager.AUDIOFOCUS_REQUEST_FAILED:
+                Log.d(TAG, "AUDIOFOCUS_REQUEST_FAILED");
+                break;
         }
     }
 
-    private EssentialYouTubeView essentialYouTubeView = null;
-    public void showEssentialYouTubeView(){
-        hideEssentialButton();
-        if (essentialYouTubeView == null){
-            essentialYouTubeView = new EssentialYouTubeView(this);
-        }
-        essentialYouTubeView.setVisibility(true);
-    }
-
-    public void hideEssentialYouTubeView(){
-        showEssentialButton();
-        if (essentialYouTubeView!=null){
-            essentialYouTubeView.setVisibility(false);
-        }
-        essentialYouTubeView = null;
-    }
 }
